@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 class Login extends React.Component {
   state = {
@@ -7,6 +8,13 @@ class Login extends React.Component {
   }
 
   handleLogin = this.handleLogin.bind(this)
+
+  // make auth component
+  componentWillMount() {
+    if(this.props.authorized){
+      this.props.history.push('/polls');
+    }
+  }
 
   onChange(text, source){
     this.setState({ [source]: text });
@@ -56,4 +64,8 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapStateToProps = state => ({
+  authorized: state.auth.authorized
+})
+
+export default connect(mapStateToProps)(Login);

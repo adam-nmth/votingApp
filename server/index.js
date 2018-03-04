@@ -16,6 +16,7 @@ var config = require('./config'); // get our config file
 // Models
 var User   = require('../models/users');
 var Poll = require('../models/polls');
+var Vote = require('../models/votes');
 
 //and create our instances
 var app = express();
@@ -226,7 +227,8 @@ apiRoutes.post('/create/poll', function(req, res){
       if(err) throw err;
 
       if(user){
-        const publicUrl = req.body.question.substr(0, 10).replace(' ', '_') + '_' + uuid().substr(0, 7);
+        var publicUrl = req.body.question.substr(0, 10) + '_' + uuid().substr(0, 7);
+        publicUrl = publicUrl.replace(' ', '_');
 
         var newPoll = new Poll({
           question: req.body.question,
@@ -249,8 +251,8 @@ apiRoutes.post('/create/poll', function(req, res){
   }
 })
 
-apiRoutes.get('/poll/:publicUrl', function(req, res) {
-  var publicUrl = req.params.publicUrl;
+apiRoutes.get('/poll/:id', function(req, res) {
+  var publicUrl = req.params.id;
 
   Poll.findOne({
     public_url: publicUrl
@@ -266,6 +268,22 @@ apiRoutes.get('/poll/:publicUrl', function(req, res) {
         data: poll
       })
     }
+  })
+})
+
+// delete a poll by id
+apiRoutes.delete('/poll/:id', function(req, res) {
+  var publicUrl = req.params.id;
+
+  Poll.deleteOne({
+    public_url: publicUrl
+  }, function(err) {
+    if (err) throw err;
+
+    res.json({
+      status: 'ok',
+      message: 'poll deleted'
+    })
   })
 })
 

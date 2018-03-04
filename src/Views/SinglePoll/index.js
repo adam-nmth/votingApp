@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { deletePoll } from '../../store/actions/polls';
 
 class SinglePoll extends React.Component {
   state = {
@@ -9,19 +11,19 @@ class SinglePoll extends React.Component {
     }
   }
 
+  handleDelete = this.handleDelete.bind(this)
+
   componentDidMount() {
-    const token = localStorage.getItem('accessToken');
     fetch('http://localhost:3001/api/poll/' + this.props.match.params.id, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': token // make this from reducer
+        'Authorization': this.props.auth.accessToken // make this from reducer
       },
       credentials: 'same-origin',
     })
       .then(res => res.json())
       .then((res) => {
-        console.log(res)
         this.setState({
           poll: res.data
         })
@@ -30,6 +32,28 @@ class SinglePoll extends React.Component {
 
   handleVote(vote) {
     // do something
+  }
+
+  handleDelete() {
+    fetch('http://localhost:3001/api/poll/' + this.props.match.params.id, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': this.props.auth.accessToken
+      },
+      credentials: 'same-origin',
+    })
+      .then(res => res.json())
+      .then((res) => {
+        console.log(res)
+        if(res.status == 'ok'){
+          if(this.props.polls.all.length){
+            this.props.dispatch(deletePoll(this.props.match.params.id))
+          }
+
+          this.props.history.push('/polls');
+        }
+      });
   }
 
   render() {
@@ -46,11 +70,11 @@ class SinglePoll extends React.Component {
           <button onClick={() => this.handleVote(false)}>No</button>
         </div>
         <div>
-          <button>delete poll</button>
+          <button onClick={this.handleDelete}>delete poll</button>
         </div>
       </div>
     )
   }
 }
 
-export default SinglePoll;
+export default connect(({ auth, polls }) => ({ auth, polls }))(SinglePoll);

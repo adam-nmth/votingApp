@@ -31,3 +31,4 @@ export const deletePoll = publicUrl => (dispatch, getState) => {
 
   dispatch(setPolls(updatedList))
 };
+

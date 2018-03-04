@@ -8,12 +8,11 @@ import {
 
 class Polls extends React.Component {
   componentDidMount() {
-    const token = localStorage.getItem('accessToken');
     fetch('http://localhost:3001/api/polls', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': token
+        'Authorization': this.props.auth.accessToken
       },
       credentials: 'same-origin',
     })
@@ -26,7 +25,15 @@ class Polls extends React.Component {
   }
 
   onDelete(publicUrl) {
-    // fetch something
+    fetch('http://localhost:3001/api/poll/' + publicUrl, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': this.props.auth.accessToken
+      },
+      credentials: 'same-origin',
+    })
+
     this.props.dispatch(deletePoll(publicUrl));
   }
 
@@ -61,4 +68,4 @@ class Polls extends React.Component {
   }
 }
 
-export default connect(({ polls }) => ({ polls }))(Polls);
+export default connect(({ polls, auth }) => ({ polls, auth }))(Polls);
