@@ -21,6 +21,9 @@ export default function reducer(state = initialState, action = {}) {
         personalData: action.data,
         authorized: true
       }
+
+    case 'RESET_AUTH':
+      return initialState
     
     default:
       return state;

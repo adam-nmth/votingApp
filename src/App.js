@@ -28,7 +28,6 @@ class App extends React.Component {
       })
         .then(res => res.json())
         .then((res) => {
-          console.log(res)
           if(res.status == 'ok'){
             this.props.dispatch(setPersonalData(res.data));
           }
