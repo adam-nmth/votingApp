@@ -228,7 +228,7 @@ apiRoutes.post('/create/poll', function(req, res){
 
       if(user){
         var publicUrl = req.body.question.substr(0, 10) + '_' + uuid().substr(0, 7);
-        publicUrl = publicUrl.replace(' ', '_');
+        publicUrl = publicUrl.replace(/ /g, '_');
 
         var newPoll = new Poll({
           question: req.body.question,
@@ -253,6 +253,14 @@ apiRoutes.post('/create/poll', function(req, res){
 
 apiRoutes.get('/poll/:id', function(req, res) {
   var publicUrl = req.params.id;
+  var userId = req.decoded.id;
+
+  function extend(obj, src) {
+    for (var key in src) {
+        if (src.hasOwnProperty(key)) obj[key] = src[key];
+    }
+    return obj;
+}
 
   Poll.findOne({
     public_url: publicUrl
@@ -260,12 +268,48 @@ apiRoutes.get('/poll/:id', function(req, res) {
     if(err) throw err;
 
     if(poll){
-      // find out also, if the user had voted already
-      // search user in userVotes -> search vote in votes model -> get if voted/not, if yes/no then->
+      // get yescounts
+      Vote.count({
+        pollId: poll._id,
+        vote: true
+      }, function(err, yesCount) {
+        if(err) throw err;
 
-      res.json({
-        status: 'ok',
-        data: poll
+        // get nocounts
+        Vote.count({
+          pollId: poll._id,
+          vote: false
+        }, function(err, noCount) {
+          if(err) throw err;
+
+          var resData = {
+            yesCount: yesCount,
+            noCount: noCount,
+            _id: poll._id,
+            question: poll.question,
+            public_url: poll.public_url,
+            userId: poll.userId
+          }
+
+          Vote.count({
+            pollId: poll._id,
+            userId: userId
+          }, function(err, userVoteCount) {
+            if(err) throw err;
+            console.log(userVoteCount);
+            if(userVoteCount > 0){
+              resData.hasVoted = true;
+            }else {
+              resData.hasVoted = false;
+            }
+
+            res.json({
+              status: 'ok',
+              data: resData
+            })
+          })
+
+        })
       })
     }
   })
@@ -283,6 +327,27 @@ apiRoutes.delete('/poll/:id', function(req, res) {
     res.json({
       status: 'ok',
       message: 'poll deleted'
+    })
+  })
+})
+
+apiRoutes.post('/vote/:id', function(req, res) {
+  var userId = req.decoded.payload;
+  var pollId = req.params.id;
+  var vote = req.body.vote;
+  console.log(vote, pollId, userId);
+  var newVote = new Vote({
+    userId: userId,
+    pollId: pollId,
+    vote: vote
+  });
+
+  newVote.save(function(err) {
+    if(err) throw err;
+
+    res.json({
+      status: 'ok',
+      message: 'succesfull vote'
     })
   })
 })

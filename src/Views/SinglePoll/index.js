@@ -8,7 +8,8 @@ class SinglePoll extends React.Component {
       question: '',
       yesCount: 0,
       noCount: 0
-    }
+    },
+    showVoteButtons: true
   }
 
   handleDelete = this.handleDelete.bind(this)
@@ -31,7 +32,29 @@ class SinglePoll extends React.Component {
   }
 
   handleVote(vote) {
-    // do something
+    fetch('http://localhost:3001/api/vote/' + this.state.poll._id, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': this.props.auth.accessToken
+      },
+      body: JSON.stringify({ vote }),
+      credentials: 'same-origin',
+    })
+      .then(res => res.json())
+      .then((res) => {
+        console.log(res)
+        if(res.status == 'ok'){
+          this.setState({
+            poll: {
+              ...this.state.poll,
+              yesCount: vote ? (this.state.yesCount + 1) : this.state.yesCount,
+              noCount: !vote ? (this.state.noCount + 1) : this.state.noCount,
+            },
+            showVoteButtons: false
+          })
+        }
+      });
   }
 
   handleDelete() {
@@ -57,18 +80,21 @@ class SinglePoll extends React.Component {
   }
 
   render() {
+    console.log(this.state)
     return (
       <div>
         <h1>Poll:</h1>
         <h3>{ this.state.poll.question }</h3>
-        <div>
-          <span>Yes: { this.state.poll.yesCount }</span>
-          <span>No: { this.state.poll.noCount }</span>
-        </div>
-        <div>
-          <button onClick={() => this.handleVote(true)}>Yes</button>
-          <button onClick={() => this.handleVote(false)}>No</button>
-        </div>
+          <div>
+            <span>Yes: { this.state.poll.yesCount }</span>
+            <span>No: { this.state.poll.noCount }</span>
+          </div>
+        { !!this.state.showVoteButtons &&
+          <div>
+            <button onClick={() => this.handleVote(true)}>Yes</button>
+            <button onClick={() => this.handleVote(false)}>No</button>
+          </div>
+        }
         <div>
           <button onClick={this.handleDelete}>delete poll</button>
         </div>
