@@ -8,8 +8,7 @@ class SinglePoll extends React.Component {
       question: '',
       yesCount: 0,
       noCount: 0
-    },
-    showVoteButtons: true
+    }
   }
 
   handleDelete = this.handleDelete.bind(this)
@@ -45,13 +44,14 @@ class SinglePoll extends React.Component {
       .then((res) => {
         console.log(res)
         if(res.status == 'ok'){
+          const { yesCount, noCount } = this.state.poll;
           this.setState({
             poll: {
               ...this.state.poll,
-              yesCount: vote ? (this.state.yesCount + 1) : this.state.yesCount,
-              noCount: !vote ? (this.state.noCount + 1) : this.state.noCount,
-            },
-            showVoteButtons: false
+              yesCount: vote ? (yesCount + 1) : yesCount,
+              noCount: !vote ? (noCount + 1) : noCount,
+              hasVoted: true
+            }
           })
         }
       });
@@ -89,7 +89,7 @@ class SinglePoll extends React.Component {
             <span>Yes: { this.state.poll.yesCount }</span>
             <span>No: { this.state.poll.noCount }</span>
           </div>
-        { !!this.state.showVoteButtons &&
+        { !this.state.poll.hasVoted &&
           <div>
             <button onClick={() => this.handleVote(true)}>Yes</button>
             <button onClick={() => this.handleVote(false)}>No</button>

@@ -253,7 +253,7 @@ apiRoutes.post('/create/poll', function(req, res){
 
 apiRoutes.get('/poll/:id', function(req, res) {
   var publicUrl = req.params.id;
-  var userId = req.decoded.id;
+  var userId = req.decoded.payload;
 
   function extend(obj, src) {
     for (var key in src) {
@@ -296,7 +296,7 @@ apiRoutes.get('/poll/:id', function(req, res) {
             userId: userId
           }, function(err, userVoteCount) {
             if(err) throw err;
-            console.log(userVoteCount);
+
             if(userVoteCount > 0){
               resData.hasVoted = true;
             }else {
@@ -335,7 +335,7 @@ apiRoutes.post('/vote/:id', function(req, res) {
   var userId = req.decoded.payload;
   var pollId = req.params.id;
   var vote = req.body.vote;
-  console.log(vote, pollId, userId);
+
   var newVote = new Vote({
     userId: userId,
     pollId: pollId,
