@@ -42,7 +42,6 @@ class SinglePoll extends React.Component {
     })
       .then(res => res.json())
       .then((res) => {
-        console.log(res)
         if(res.status == 'ok'){
           const { yesCount, noCount } = this.state.poll;
           this.setState({
@@ -68,7 +67,6 @@ class SinglePoll extends React.Component {
     })
       .then(res => res.json())
       .then((res) => {
-        console.log(res)
         if(res.status == 'ok'){
           if(this.props.polls.all.length){
             this.props.dispatch(deletePoll(this.props.match.params.id))

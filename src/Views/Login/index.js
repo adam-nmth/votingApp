@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { setAccessToken } from '../../store/actions/auth';
 
 class Login extends React.Component {
   state = {
@@ -35,6 +36,7 @@ class Login extends React.Component {
         .then(({ token }) => {
           if(token){
             localStorage.setItem('accessToken', token);
+            this.props.dispatch(setAccessToken(token));
             this.props.history.push('/polls');
           }
         });
