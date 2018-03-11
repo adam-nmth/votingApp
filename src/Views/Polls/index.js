@@ -24,19 +24,6 @@ class Polls extends React.Component {
       });
   }
 
-  onDelete(publicUrl) {
-    fetch('http://localhost:3001/api/poll/' + publicUrl, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': this.props.auth.accessToken
-      },
-      credentials: 'same-origin',
-    })
-
-    this.props.dispatch(deletePoll(publicUrl));
-  }
-
   renderPolls() {
     // counts should be turned into percentages
     return this.props.polls.all.map((item, i) => (
@@ -47,9 +34,6 @@ class Polls extends React.Component {
         <Link to={`/poll/${item.public_url}`}>
           <span> see poll </span>
         </Link>
-        <button onClick={() => this.onDelete(item.public_url)} >
-          X
-        </button>
       </article>
     ))
   }
