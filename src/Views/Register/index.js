@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { setAccessToken } from '../../store/actions/auth';
 
 class Register extends React.Component {
   handleSubmit = this.handleSubmit.bind(this);
@@ -52,6 +54,7 @@ class Register extends React.Component {
       .then(({ token }) => {
         if (token) {
           localStorage.setItem('accessToken', token);
+          this.props.dispatch(setAccessToken(token));
           this.props.history.push('/polls');
         }
       });
@@ -87,4 +90,4 @@ class Register extends React.Component {
   }
 }
 
-export default Register;
+export default connect()(Register);
