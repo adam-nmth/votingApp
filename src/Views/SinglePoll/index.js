@@ -78,7 +78,7 @@ class SinglePoll extends React.Component {
   }
 
   render() {
-    console.log(this.state)
+    const myPoll = this.props.auth.personalData._id === this.state.poll.userId;
     return (
       <div>
         <h1>Poll:</h1>
@@ -93,9 +93,11 @@ class SinglePoll extends React.Component {
             <button onClick={() => this.handleVote(false)}>No</button>
           </div>
         }
-        <div>
-          <button onClick={this.handleDelete}>delete poll</button>
-        </div>
+        { !!myPoll && 
+          <div>
+            <button onClick={this.handleDelete}>delete poll</button>
+          </div>
+        }
       </div>
     )
   }
