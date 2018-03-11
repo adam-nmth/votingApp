@@ -37,13 +37,26 @@ class MenuBar extends React.Component {
         to: '/polls'
       },
       {
+        title: 'Create Poll',
+        to: '/create_poll'
+      },
+      {
         title: 'Log Out',
         to: '#',
         onClick: this.onLogOut
       }
     ];
 
-    this.unAuthorizedLinks = [];
+    this.unAuthorizedLinks = [
+      {
+        title: 'Register',
+        to: '/register'
+      },
+      {
+        title: 'Login',
+        to: '/login'
+      }
+    ];
   }
 
   onLogOut() {
