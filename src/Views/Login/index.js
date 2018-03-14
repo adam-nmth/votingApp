@@ -2,6 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { setAccessToken } from '../../store/actions/auth';
 
+// components
+import Input from '../../Components/Input';
+import Form from '../../Components/Form';
+
 class Login extends React.Component {
   state = {
     email: '',
@@ -48,18 +52,28 @@ class Login extends React.Component {
         <h1>
           Login
         </h1>
-        <form>
-        <input type='email'
-          value={this.state.email}
-          onChange={(text) => this.onChange(text.target.value, 'email')} />
-        <input type='password'
-          value={this.state.password}
-          onChange={(text) => this.onChange(text.target.value, 'password')} />
-        <button
-          onClick={this.handleLogin}
+        <Form
+          onSubmit={this.handleLogin}
         >
-        Login</button>
-        </form>
+          <Input
+            value={ this.state.email }
+            label='Email'
+            onChange={(text) => this.onChange(text.target.value, 'email')}
+            type='email'
+            placeholder='voting@app.com...'
+          />
+          <Input
+            value={ this.state.password }
+            label='Password'
+            onChange={(text) => this.onChange(text.target.value, 'password')}
+            type='password'
+            placeholder='Password...'
+          />
+          <button
+            type='submit'
+          >
+          Login</button>
+        </Form>
 
       </div>
     )

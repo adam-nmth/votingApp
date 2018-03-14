@@ -33,12 +33,12 @@ class MenuBar extends React.Component {
         to: '#'
       },
       {
-        title: 'Polls',
-        to: '/polls'
-      },
-      {
         title: 'Create Poll',
         to: '/create_poll'
+      },
+      {
+        title: 'Polls',
+        to: '/polls'
       },
       {
         title: 'Log Out',

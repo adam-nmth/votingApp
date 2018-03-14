@@ -1,0 +1,8 @@
+body{
+  font-family: 'Oswald-Light';
+}
+
+@font-face{
+  font-family: 'Oswald-Light';
+  src: url(/public/fonts/Oswald-Light.ttf) format('truetype');
+}

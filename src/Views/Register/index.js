@@ -2,6 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { setAccessToken } from '../../store/actions/auth';
 
+// components
+import Input from '../../Components/Input';
+import Form from '../../Components/Form';
+
 class Register extends React.Component {
   handleSubmit = this.handleSubmit.bind(this);
 
@@ -64,27 +68,33 @@ class Register extends React.Component {
     return (
       <div>
         <h1>Register</h1>
-        <form onSubmit={this.handleSubmit}>
-          <input
+        <Form onSubmit={this.handleSubmit}>
+          <Input
             type="email"
             value={this.state.email}
+            label='Email'
+            placeholder='voting@app.com...'
             required
             onChange={text => this.onChange('email', text.target.value)}
           />
-          <input
+          <Input
             type="password"
             value={this.state.passwordOne}
+            label='Password'
+            placeholder='Password...'
             required
             onChange={text => this.onChange('passwordOne', text.target.value)}
           />
-          <input
+          <Input
             type="password"
             value={this.state.passwordTwo}
+            label='Password again'
+            placeholder='Password again...'
             required
             onChange={text => this.onChange('passwordTwo', text.target.value)}
           />
           <button type="submit">register</button>
-        </form>
+        </Form>
       </div>
     );
   }
