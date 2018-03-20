@@ -5,6 +5,7 @@ import {
   setPolls,
   deletePoll
 } from '../../store/actions/polls';
+import Authorization from '../../Components/Authorization';
 
 class Polls extends React.Component {
   componentDidMount() {
@@ -52,4 +53,4 @@ class Polls extends React.Component {
   }
 }
 
-export default connect(({ polls, auth }) => ({ polls, auth }))(Polls);
+export default connect(({ polls, auth }) => ({ polls, auth }))(Authorization(Polls));

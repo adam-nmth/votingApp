@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { deletePoll } from '../../store/actions/polls';
+import Authorization from '../../Components/Authorization';
 
 class SinglePoll extends React.Component {
   state = {
@@ -103,4 +104,4 @@ class SinglePoll extends React.Component {
   }
 }
 
-export default connect(({ auth, polls }) => ({ auth, polls }))(SinglePoll);
+export default connect(({ auth, polls }) => ({ auth, polls }))(Authorization(SinglePoll));

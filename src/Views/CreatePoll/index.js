@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { addNewPoll } from '../../store/actions/polls';
+import Authorization from '../../Components/Authorization';
 
 class CreatePoll extends React.Component {
   state = {
@@ -69,4 +70,4 @@ class CreatePoll extends React.Component {
   }
 }
 
-export default connect(({ polls }) => ({ polls }))(CreatePoll);
+export default connect(({ polls }) => ({ polls }))(Authorization(CreatePoll));

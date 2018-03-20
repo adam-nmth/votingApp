@@ -21,6 +21,12 @@ class Login extends React.Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    if(!this.props.authorized && nextProps.authorized){
+      this.props.history.push('/polls')
+    }
+  }
+
   onChange(text, source){
     this.setState({ [source]: text });
   }
@@ -41,9 +47,8 @@ class Login extends React.Component {
           if(token){
             localStorage.setItem('accessToken', token);
             this.props.dispatch(setAccessToken(token));
-            this.props.history.push('/polls');
           }
-        });
+        })
   }
 
   render() {
