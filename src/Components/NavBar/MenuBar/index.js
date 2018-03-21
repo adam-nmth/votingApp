@@ -5,19 +5,24 @@ import styled from 'styled-components';
 
 import { resetAuth } from '../../../store/actions/auth';
 
+import colors from '../../../utils/colors';
+
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-top: 1px solid black;
   height: 39px;
 `;
 
 const MenuLink = styled(Link)`
-  border: 1px solid black;
-  padding: 6px;
-    border-top: 0;
-    border-bottom: 0;
+  padding: 20px;
+  font-size: 20px;
+  color: ${colors.blue};
+
+  &:hover{
+    text-decoration: none;
+    color: ${colors.beige};
+  }
 `;
 
 class MenuBar extends React.Component {

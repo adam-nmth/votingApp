@@ -1,8 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 
 import { addNewPoll } from '../../store/actions/polls';
 import Authorization from '../../Components/Authorization';
+import Title from '../../Components/Title';
+
+const Wrapper = styled.div`
+
+`;
 
 class CreatePoll extends React.Component {
   state = {
@@ -56,8 +62,8 @@ class CreatePoll extends React.Component {
 
   render() {
     return (
-      <div>
-        <h1>Create Poll</h1>
+      <Wrapper>
+        <Title>Create Poll</Title>
         <form onSubmit={this.onSubmit} >
           <textarea required onChange={this.onChange} />
           {!!this.state.response && 
@@ -65,7 +71,7 @@ class CreatePoll extends React.Component {
           }
           <button>start Poll</button>
         </form>
-      </div>
+      </Wrapper>
     )
   }
 }

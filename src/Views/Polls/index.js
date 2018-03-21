@@ -6,6 +6,7 @@ import {
   deletePoll
 } from '../../store/actions/polls';
 import Authorization from '../../Components/Authorization';
+import Title from '../../Components/Title';
 
 class Polls extends React.Component {
   componentDidMount() {
@@ -42,7 +43,7 @@ class Polls extends React.Component {
   render() {
     return (
       <section>
-        <h1>Polls</h1>
+        <Title>Polls</Title>
         {this.renderPolls()}
         <hr />
         <Link to='/create_poll'>
