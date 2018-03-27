@@ -2,6 +2,13 @@
   "name": "votingApp",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "8.9.x"
+  },
+  "cacheDirectories": [
+    "node_modules",
+    "react-ui/node_modules"
+  ],
   "devDependencies": {
     "react-scripts": "1.1.0",
     "redux-devtools": "^3.4.1"
@@ -28,6 +35,8 @@
   "scripts": {
     "start": "react-scripts start",
     "start-dev": "parallelshell \"mongod\" \"npm run server\" \"npm start\"",
+    "start-prod": "node ./server/index.js",
+    "heroku-postbuild": "npm install && npm install --only=dev --no-shrinkwrap && npm run build",
     "server": "nodemon ./server/index.js",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
