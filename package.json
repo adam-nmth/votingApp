@@ -2,6 +2,7 @@
   "name": "votingApp",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://localhost:3001",
   "engines": {
     "node": "8.9.x"
   },
@@ -37,7 +38,7 @@
     "start": "react-scripts start",
     "start-dev": "parallelshell \"mongod\" \"npm run server\" \"npm start\"",
     "start-prod": "node ./server/index.js",
-    "heroku-postbuild": "npm install && npm install --only=dev --no-shrinkwrap && npm run build && npm install -g serve && serve -s build",
+    "heroku-postbuild": "npm install && npm install --only=dev --no-shrinkwrap && npm run build",
     "server": "nodemon ./server/index.js",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",

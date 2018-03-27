@@ -38,7 +38,7 @@ app.use(bodyParser.json());
 app.use(morgan('dev'));
 
 // set static serve path to public
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.join(__dirname, '../build')));
 
 //To prevent errors from Cross Origin Resource Sharing, we will set 
 //our headers to allow CORS with middleware like so:
