@@ -354,7 +354,7 @@ apiRoutes.post('/vote/:id', function(req, res) {
 
 // REACT
 router.get('*', function (req, res) {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  res.sendFile(path.join(__dirname, '../build', 'index.html'));
 });
 
 //Use our router configuration when we call /api
