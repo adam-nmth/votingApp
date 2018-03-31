@@ -2,28 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
-  setPolls,
-  deletePoll
+  fetchAllPolls
 } from '../../store/actions/polls';
 import Authorization from '../../Components/Authorization';
 import Title from '../../Components/Title';
 
 class Polls extends React.Component {
   componentDidMount() {
-    fetch('http://localhost:3001/api/polls', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': this.props.auth.accessToken
-      },
-      credentials: 'same-origin',
-    })
-      .then(res => res.json())
-      .then((resp) => {
-        if (resp.status == 'ok') {
-          this.props.dispatch(setPolls(resp.data));
-        }
-      });
+    this.props.dispatch(fetchAllPolls())
   }
 
   renderPolls() {

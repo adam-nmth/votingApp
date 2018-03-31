@@ -1,3 +1,6 @@
+import { routes } from '../../../utils/apiRoutes';
+import fetchMethod from '../../../utils/fetchMethod';
+
 /**********
  * Synchronous actions
  **********/
@@ -31,4 +34,86 @@ export const deletePoll = publicUrl => (dispatch, getState) => {
 
   dispatch(setPolls(updatedList))
 };
+
+// async actions below
+
+export function fetchCreatePoll(data) {
+    return function(dispatch, getState) {
+      const { auth } = getState();
+      const url = routes.API_CREATE_POLL;
+
+      return fetchMethod(
+        "POST",
+        url,
+        data,
+        auth.accessToken,
+      )
+      .catch(err => console.error(err));
+    };
+}
+
+export function fetchAllPolls() {
+    return function(dispatch, getState) {
+      const { auth } = getState();
+      const url = routes.API_POLLS;
+
+      return fetchMethod(
+        "GET",
+        url,
+        {},
+        auth.accessToken,
+      )
+      .then((resp) => {
+        if (resp.status == 'ok') {
+          dispatch(setPolls(resp.data));
+        }
+      })
+      .catch(err => console.error(err));
+    };
+}
+
+export function fetchSinglePoll(pollId) {
+    return function(dispatch, getState) {
+      const { auth } = getState();
+      const url = routes.API_POLL_ID(pollId);
+
+      return fetchMethod(
+        "GET",
+        url,
+        {},
+        auth.accessToken,
+      )
+      .catch(err => console.error(err));
+    };
+}
+
+export function fetchVote(vote, pollId) {
+    return function(dispatch, getState) {
+      const { auth } = getState();
+      const url = routes.API_VOTE_ID(pollId);
+
+      return fetchMethod(
+        "POST",
+        url,
+        { vote },
+        auth.accessToken,
+      )
+      .catch(err => console.error(err));
+    };
+}
+
+export function fetchDeletePoll(pollId) {
+    return function(dispatch, getState) {
+      const { auth } = getState();
+      const url = routes.API_POLL_ID(pollId);
+
+      return fetchMethod(
+        "DELETE",
+        url,
+        {},
+        auth.accessToken,
+      )
+      .catch(err => console.error(err));
+    };
+}
 

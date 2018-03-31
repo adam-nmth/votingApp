@@ -1,6 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { deletePoll } from '../../store/actions/polls';
+import {
+  fetchSinglePoll,
+  fetchVote,
+  fetchDeletePoll,
+  deletePoll
+} from '../../store/actions/polls';
 import Authorization from '../../Components/Authorization';
 
 class SinglePoll extends React.Component {
@@ -15,15 +20,8 @@ class SinglePoll extends React.Component {
   handleDelete = this.handleDelete.bind(this)
 
   componentDidMount() {
-    fetch('http://localhost:3001/api/poll/' + this.props.match.params.id, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': this.props.auth.accessToken // make this from reducer
-      },
-      credentials: 'same-origin',
-    })
-      .then(res => res.json())
+    const { id: pollId } = this.props.match.params;
+    this.props.dispatch(fetchSinglePoll(pollId))
       .then((res) => {
         this.setState({
           poll: res.data
@@ -32,16 +30,7 @@ class SinglePoll extends React.Component {
   }
 
   handleVote(vote) {
-    fetch('http://localhost:3001/api/vote/' + this.state.poll._id, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': this.props.auth.accessToken
-      },
-      body: JSON.stringify({ vote }),
-      credentials: 'same-origin',
-    })
-      .then(res => res.json())
+    this.props.dispatch(fetchVote(vote,this.state.poll._id))
       .then((res) => {
         if(res.status == 'ok'){
           const { yesCount, noCount } = this.state.poll;
@@ -58,15 +47,8 @@ class SinglePoll extends React.Component {
   }
 
   handleDelete() {
-    fetch('http://localhost:3001/api/poll/' + this.props.match.params.id, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': this.props.auth.accessToken
-      },
-      credentials: 'same-origin',
-    })
-      .then(res => res.json())
+    const { id: pollId } = this.props.match.params;
+    this.props.dispatch(fetchDeletePoll(pollId))
       .then((res) => {
         if(res.status == 'ok'){
           if(this.props.polls.all.length){

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Provider, connect } from 'react-redux';
-import { Route, BrowserRouter, withRouter } from 'react-router-dom';
+import { Route, BrowserRouter } from 'react-router-dom';
 
 // actions
-import { setAccessToken, setPersonalData } from './store/actions/auth';
+import { setAccessToken, fetchPersonalData } from './store/actions/auth';
 
 import Layout from './Layout';
 
@@ -18,25 +18,12 @@ class App extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if(this.props.auth.accessToken !== nextProps.auth.accessToken) {
-      fetch('http://localhost:3001/api/personal', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': nextProps.auth.accessToken // make this from reducer
-        },
-        credentials: 'same-origin',
-      })
-        .then(res => res.json())
+      this.props.dispatch(fetchPersonalData())
         .then((res) => {
-          if(res.status == 'ok'){
-            this.props.dispatch(setPersonalData(res.data));
-          }
-
           this.setState({ loading: false });
         })
         .catch(e => {
           console.log(e);
-
           this.setState({ loading: false });
         });
     }

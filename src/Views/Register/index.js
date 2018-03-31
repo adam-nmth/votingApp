@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setAccessToken } from '../../store/actions/auth';
+import { fetchRegister } from '../../store/actions/auth';
 
 // components
 import Input from '../../Components/Input';
@@ -46,21 +46,9 @@ class Register extends React.Component {
       password: this.state.passwordOne,
     };
 
-    fetch('http://localhost:3001/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'same-origin',
-      body: JSON.stringify(body),
-    })
-      .then(res => res.json())
-      .then(({ token }) => {
-        if (token) {
-          localStorage.setItem('accessToken', token);
-          this.props.dispatch(setAccessToken(token));
-          this.props.history.push('/polls');
-        }
+    this.props.dispatch(fetchRegister(body))
+      .then(() => {
+        this.props.history.push('/polls');
       });
   }
 

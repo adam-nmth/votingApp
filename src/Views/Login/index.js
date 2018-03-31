@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setAccessToken } from '../../store/actions/auth';
+import { fetchLogin } from '../../store/actions/auth';
 
 // components
 import Input from '../../Components/Input';
@@ -34,21 +34,7 @@ class Login extends React.Component {
   handleLogin(e){
     e.preventDefault();
 
-    fetch("http://localhost:3001/login", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            credentials: 'same-origin',
-            body: JSON.stringify(this.state)
-        })
-        .then(res => res.json())
-        .then(({ token }) => {
-          if(token){
-            localStorage.setItem('accessToken', token);
-            this.props.dispatch(setAccessToken(token));
-          }
-        })
+    this.props.dispatch(fetchLogin(this.state));
   }
 
   render() {

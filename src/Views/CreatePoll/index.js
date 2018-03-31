@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { addNewPoll } from '../../store/actions/polls';
 import Authorization from '../../Components/Authorization';
 import Title from '../../Components/Title';
+import { fetchCreatePoll } from '../../store/actions/polls';
 
 const Wrapper = styled.div`
 
@@ -31,17 +32,7 @@ class CreatePoll extends React.Component {
       const body = {
         question: this.state.text,
       }
-
-      fetch('http://localhost:3001/api/create/poll', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': token
-        },
-        credentials: 'same-origin',
-        body: JSON.stringify(body),
-      })
-        .then(res => res.json())
+      this.props.dispatch(fetchCreatePoll(body))
         .then((response) => {
           if(response.status == 'ok'){
             this.setState({ response: 'Poll saved' });
@@ -65,11 +56,11 @@ class CreatePoll extends React.Component {
       <Wrapper>
         <Title>Create Poll</Title>
         <form onSubmit={this.onSubmit} >
-          <textarea required onChange={this.onChange} />
+          { !this.state.response && <textarea required onChange={this.onChange} /> }
           {!!this.state.response && 
             <div>{ this.state.response }</div>
           }
-          <button>start Poll</button>
+          { !this.state.response && <button>start Poll</button> }
         </form>
       </Wrapper>
     )

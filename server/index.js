@@ -137,7 +137,7 @@ router.post('/login', function(req, res) {
             payload: user.payload 
           };
           var token = jwt.sign(payload, app.get('superSecret'));
-
+ 
           // return the information including token as JSON
           res.json({
             success: true,
