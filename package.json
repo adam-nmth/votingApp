@@ -11,9 +11,10 @@
     "react-ui/node_modules"
   ],
   "devDependencies": {
+    "forever": "^0.15.3",
+    "nodemon": "^1.14.12",
     "react-scripts": "1.1.0",
-    "redux-devtools": "^3.4.1",
-    "nodemon": "^1.14.12"
+    "redux-devtools": "^3.4.1"
   },
   "dependencies": {
     "body-parser": "^1.18.2",
@@ -37,7 +38,7 @@
   "scripts": {
     "start": "react-scripts start",
     "start-dev": "parallelshell \"mongod\" \"npm run server\" \"npm start\"",
-    "start-prod": "node ./server/index.js",
+    "start-prod": "forever start -l forever.log -o out.log -e err.log ./server/index.js",
     "heroku-postbuild": "npm install && npm install --only=dev --no-shrinkwrap && npm run build",
     "server": "nodemon ./server/index.js",
     "build": "react-scripts build",

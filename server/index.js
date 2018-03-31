@@ -8,6 +8,7 @@ var passport = require("passport");
 var morgan = require("morgan");
 var mongoose = require("mongoose");
 var uuid = require('uuid/v1');
+var _ = require('lodash');
 
 
 var jwt    = require('jsonwebtoken'); // used to create, sign, and verify tokens
@@ -229,6 +230,7 @@ apiRoutes.post('/create/poll', function(req, res){
       if(user){
         var publicUrl = req.body.question.substr(0, 10) + '_' + uuid().substr(0, 7);
         publicUrl = publicUrl.replace(/ /g, '_');
+        publicUrl = _.replace(publicUrl, '?', '');
 
         var newPoll = new Poll({
           question: req.body.question,

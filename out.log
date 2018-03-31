@@ -1,0 +1,7 @@
+api running on port 5000
+[0mGET / [32m200 [0m7.057 ms - 548[0m
+[0mGET /static/js/main.2fe47ee9.js [32m200 [0m2.192 ms - 247454[0m
+[0mGET /static/css/main.4413f71b.css [32m200 [0m8.742 ms - 137457[0m
+[0mGET /static/css/main.4413f71b.css.map [32m200 [0m3.767 ms - 181758[0m
+[0mGET /static/js/main.2fe47ee9.js.map [32m200 [0m0.953 ms - 1467109[0m
+[0mGET /public/fonts/Oswald-Light.ttf [32m200 [0m2.924 ms - 548[0m
