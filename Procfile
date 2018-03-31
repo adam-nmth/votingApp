@@ -1,1 +1,1 @@
-web: npm install forever -g && npm run start-prod
+web: npm run start-prod

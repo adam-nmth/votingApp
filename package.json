@@ -11,7 +11,6 @@
     "react-ui/node_modules"
   ],
   "devDependencies": {
-    "forever": "^0.15.3",
     "nodemon": "^1.14.12",
     "react-scripts": "1.1.0",
     "redux-devtools": "^3.4.1"
