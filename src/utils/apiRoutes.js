@@ -1,6 +1,4 @@
-import { apiEndpoint } from './envHelper';
-
-const host = apiEndpoint;
+import { apiEndpoint as host } from './envHelper';
 
 export const routes = {
   API_CREATE_POLL: `${host}/api/create/poll`,
