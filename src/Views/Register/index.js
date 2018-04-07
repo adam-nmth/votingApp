@@ -5,6 +5,8 @@ import { fetchRegister } from '../../store/actions/auth';
 // components
 import Input from '../../Components/Input';
 import Form from '../../Components/Form';
+import Title from '../../Components/Title';
+import Button from '../../Components/Button';
 
 class Register extends React.Component {
   handleSubmit = this.handleSubmit.bind(this);
@@ -55,7 +57,7 @@ class Register extends React.Component {
   render() {
     return (
       <div>
-        <h1>Register</h1>
+        <Title>Register</Title>
         <Form onSubmit={this.handleSubmit}>
           <Input
             type="email"
@@ -81,7 +83,7 @@ class Register extends React.Component {
             required
             onChange={text => this.onChange('passwordTwo', text.target.value)}
           />
-          <button type="submit">register</button>
+          <Button type="submit">Let's go!</Button>
         </Form>
       </div>
     );

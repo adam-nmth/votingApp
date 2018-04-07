@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import { addNewPoll } from '../../store/actions/polls';
 import Authorization from '../../Components/Authorization';
 import Title from '../../Components/Title';
+import Form from '../../Components/Form';
+import Button from '../../Components/Button';
 import { fetchCreatePoll } from '../../store/actions/polls';
 
 const Wrapper = styled.div`
@@ -55,13 +57,13 @@ class CreatePoll extends React.Component {
     return (
       <Wrapper>
         <Title>Create Poll</Title>
-        <form onSubmit={this.onSubmit} >
+        <Form onSubmit={this.onSubmit} >
           { !this.state.response && <textarea required onChange={this.onChange} /> }
           {!!this.state.response && 
             <div>{ this.state.response }</div>
           }
-          { !this.state.response && <button>start Poll</button> }
-        </form>
+          { !this.state.response && <Button type='submit'>Start Poll</Button> }
+        </Form>
       </Wrapper>
     )
   }

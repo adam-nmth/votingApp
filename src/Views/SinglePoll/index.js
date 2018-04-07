@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
+
 import {
   fetchSinglePoll,
   fetchVote,
@@ -7,6 +9,12 @@ import {
   deletePoll
 } from '../../store/actions/polls';
 import Authorization from '../../Components/Authorization';
+import Title from '../../Components/Title';
+import VoteReaction from './VoteReaction';
+
+const PollTitle = styled.h3`
+  color: #05386b;
+`;
 
 class SinglePoll extends React.Component {
   state = {
@@ -64,16 +72,20 @@ class SinglePoll extends React.Component {
     const myPoll = this.props.auth.personalData._id === this.state.poll.userId;
     return (
       <div>
-        <h1>Poll:</h1>
-        <h3>{ this.state.poll.question }</h3>
-          <div>
-            <span>Yes: { this.state.poll.yesCount }</span>
-            <span>No: { this.state.poll.noCount }</span>
-          </div>
+        <Title>Poll:</Title>
+        <PollTitle>{ this.state.poll.question }</PollTitle>
         { !this.state.poll.hasVoted &&
           <div>
-            <button onClick={() => this.handleVote(true)}>Yes</button>
-            <button onClick={() => this.handleVote(false)}>No</button>
+            <VoteReaction
+              title='Yes'
+              voteCount={ this.state.poll.yesCount }
+              onClick={() => this.handleVote(true)}
+            />
+            <VoteReaction
+              title='No'
+              voteCount={ this.state.poll.noCount }
+              onClick={() => this.handleVote(false)}
+            />
           </div>
         }
         { !!myPoll && 

@@ -10,14 +10,19 @@ const Wrapper = styled.div`
 const Label = styled.label`
   font-weight: bold;
   font-size: 18px;
+  color: #05386B;
 `;
 
 const StyledInput = styled.input`
-  background: white;
-  border: 0;
-  padding: 5px;
+  background: transparent;
+  border-bottom: 1px solid #05386B;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  padding: 10px;
+  color: #05386B;
 
-  &:focus{
+  &:focus {
     outline: 0;
   }
 `;
@@ -32,6 +37,6 @@ const Input = ({ label, value, onChange, type, placeholder }) => (
       placeholder={placeholder}
     />
   </Wrapper>
-)
+);
 
 export default Input;
